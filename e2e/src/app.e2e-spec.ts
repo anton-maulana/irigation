@@ -1,7 +1,7 @@
 import { browser } from 'protractor';
 import { Angular2FullStackPage } from './app.po';
 
-describe('angular2-full-stack App', () => {
+describe('irigation App', () => {
   let page: Angular2FullStackPage;
 
   beforeEach(() => {

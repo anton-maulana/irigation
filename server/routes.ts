@@ -2,13 +2,14 @@ import * as express from 'express';
 
 import CatCtrl from './controllers/cat';
 import UserCtrl from './controllers/user';
+import MarkerCtrl from './controllers/marker';
 
-export default function setRoutes(app) {
-
+export default function setRoutes(app, pusher) {
   const router = express.Router();
 
   const catCtrl = new CatCtrl();
   const userCtrl = new UserCtrl();
+  const markerCtrl = new MarkerCtrl(pusher);
 
   // Cats
   router.route('/cats').get(catCtrl.getAll);
@@ -19,15 +20,13 @@ export default function setRoutes(app) {
   router.route('/cat/:id').delete(catCtrl.delete);
 
   // Users
-  router.route('/login').post(userCtrl.login);
-  router.route('/users').get(userCtrl.getAll);
-  router.route('/users/count').get(userCtrl.count);
-  router.route('/user').post(userCtrl.insert);
-  router.route('/user/:id').get(userCtrl.get);
-  router.route('/user/:id').put(userCtrl.update);
-  router.route('/user/:id').delete(userCtrl.delete);
+  router.route('/markers').get(markerCtrl.getAll);
+  router.route('/marker/count').get(markerCtrl.count);
+  router.route('/marker').post(markerCtrl.insert);
+  router.route('/marker/:id').get(markerCtrl.get);
+  router.route('/marker/:id').put(markerCtrl.update);
+  router.route('/marker/:id').delete(markerCtrl.delete);
 
   // Apply the routes to our application with the prefix /api
   app.use('/api', router);
-
 }

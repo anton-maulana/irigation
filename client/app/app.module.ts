@@ -5,20 +5,15 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 // Services
-import { CatService } from './services/cat.service';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardLogin } from './services/auth-guard-login.service';
 import { AuthGuardAdmin } from './services/auth-guard-admin.service';
+import { MarkerService } from './services/marker.service';
 // Components
 import { AppComponent } from './app.component';
-import { CatsComponent } from './cats/cats.component';
-import { AboutComponent } from './about/about.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { LogoutComponent } from './logout/logout.component';
-import { AccountComponent } from './account/account.component';
-import { AdminComponent } from './admin/admin.component';
+import { HomeComponent } from './home/home.component';
+import { HTMLMarkerComponent } from './home/marker.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 export function tokenGetter() {
@@ -28,13 +23,8 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    CatsComponent,
-    AboutComponent,
-    RegisterComponent,
-    LoginComponent,
-    LogoutComponent,
-    AccountComponent,
-    AdminComponent,
+    HomeComponent,
+    HTMLMarkerComponent,
     NotFoundComponent
   ],
   imports: [
@@ -51,9 +41,10 @@ export function tokenGetter() {
     AuthService,
     AuthGuardLogin,
     AuthGuardAdmin,
-    CatService,
-    UserService
+    UserService,
+    MarkerService
   ],
+  entryComponents: [HTMLMarkerComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

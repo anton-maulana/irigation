@@ -6,8 +6,22 @@ import * as path from 'path';
 
 import setRoutes from './routes';
 
+const Pusher = require('pusher');
+const cors = require('cors');
 const app = express();
+
 dotenv.load({ path: '.env' });
+
+
+let pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_APP_KEY,
+  secret: process.env.PUSHER_APP_SECRET,
+  encrypted: process.env.PUSHER_APP_SECURE,
+  cluster: process.env.PUSHER_APP_CLUSTER,
+});
+
+app.use(cors());
 app.set('port', (process.env.PORT || 3000));
 
 app.use('/', express.static(path.join(__dirname, '../public')));
@@ -27,7 +41,7 @@ mongoose.connect(mongodbURI)
   .then(db => {
     console.log('Connected to MongoDB');
 
-    setRoutes(app);
+    setRoutes(app, pusher);
 
     app.get('/*', function(req, res) {
       res.sendFile(path.join(__dirname, '../public/index.html'));
